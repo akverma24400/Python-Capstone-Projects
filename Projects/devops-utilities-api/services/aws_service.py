@@ -57,3 +57,26 @@ def get_ec2_info():
         "total_instances": len(instances_info),
         "instances": instances_info
     }
+
+def get_cost_info():
+    ce = boto3.client("ce", region_name="us-east-1")
+
+    end = datetime.now().date()
+    start = end - timedelta(days=30)
+
+    response = ce.get_cost_and_usage(
+        TimePeriod={
+            "Start": str(start),
+            "End": str(end)
+        },
+        Granularity="MONTHLY",
+        Metrics=["UnblendedCost"]
+    )
+
+    cost = response["ResultsByTime"][0]["Total"]["UnblendedCost"]
+
+    return {
+        "period": f"{start} to {end}",
+        "total_cost": cost["Amount"],
+        "currency": cost["Unit"]
+    }

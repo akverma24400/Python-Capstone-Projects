@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import matrics, logs, aws, ec2
+from routers import matrics, logs, aws, ec2, cost_info
 app = FastAPI(
     title="Internal DevOps Utilities API",
     description="This is an Internal API Utitlities App for Monitoring metrics, AWS Usage, Log Analysis, etc",
@@ -19,3 +19,4 @@ app.include_router(matrics.router)
 app.include_router(logs.router)
 app.include_router(aws.router, prefix="/aws")
 app.include_router(ec2.router, prefix="/aws")
+app.include_router(cost_info.router, prefix="/aws")
