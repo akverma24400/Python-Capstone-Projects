@@ -1,3 +1,0 @@
-strands-agents[ollama]
-strands-agents
-strands-agents-tools    
